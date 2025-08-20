@@ -1,3 +1,33 @@
+// Approach 2: Frequency Count
+// TC: O(2*n)
+// SC: O(1)
+class Solution {
+    public void sortZeroOneTwo(int[] nums) {
+        int[] frequency = new int[3];
+        int n = nums.length;
+
+        for(int num : nums) {
+            frequency[num]++;
+        }
+
+        int index = 0;
+        while(index < n && frequency[0] > 0) {
+            nums[index++] = 0;
+            frequency[0]--;
+        }
+
+        while(index < n && frequency[1] > 0) {
+            nums[index++] = 1;
+            frequency[1]--;
+        }
+
+        while(index < n && frequency[2] > 0) {
+            nums[index++] = 2;
+            frequency[2]--;
+        }
+    }
+}
+
 // Approach 3: Optimal (Dutch National Flag Algorithm)
 // TC: O(n)
 // SC: O(1)
