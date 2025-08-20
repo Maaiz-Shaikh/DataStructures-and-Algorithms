@@ -1,3 +1,5 @@
+// Problem Link: https://leetcode.com/problems/3sum/
+
 // Approach 1: Brute Force
 // TC: O(n^3*log(k)) + O(nlog(n)) + O(k), k = no. of unique triplets (logk for adding k unique triplets in set, can be ignored)
 // SC: O(2*k)
@@ -135,5 +137,48 @@ class Solution {
         return triplets;
 
 
+    }
+}
+
+
+// Improvement in Approach 3: Optimal
+// Instead of using set to avoid duplicate, if we are using sorted array just skip the duplicate element once used
+// // TC: O(n^2) + O(k), k = no. of unique triplets
+// SC: O(k)
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> triplets = new ArrayList<>();
+        int n = nums.length;
+        
+        Arrays.sort(nums);
+        for(int i=0; i<n; i++) {
+            if(i>0 && nums[i] == nums[i-1]) continue;
+            
+            int left = i+1;;
+            int right = n-1;
+
+            while(left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if(sum > 0) {
+                    right--;
+                }else if(sum < 0) {
+                    left++;
+                }else {
+                    List<Integer> triplet = new ArrayList<>();
+                    triplet.add(nums[i]);
+                    triplet.add(nums[left]);
+                    triplet.add(nums[right]);
+                    triplets.add(triplet);
+                    left++;
+                    right--;
+
+                    while(left < right && nums[left] == nums[left-1]) left++;
+                    while(left < right && nums[right] == nums[right+1]) right--;
+                }
+            }
+
+        }
+
+        return triplets;
     }
 }
